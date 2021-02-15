@@ -28,7 +28,7 @@ public class BirdController : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         physics = GetComponent<Rigidbody2D>();
-        gameControl = gameControl.GetComponent<GameController>();
+        gameControl = gameController.GetComponent<GameController>();
     }
 
     void Update()

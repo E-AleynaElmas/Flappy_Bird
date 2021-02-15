@@ -940,6 +940,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ce3abef0d5e53b54785903545c135ef3, type: 3}
   - {fileID: 21300000, guid: 14afe2335fd3fda41bae720616ba3968, type: 3}
   scoreText: {fileID: 622142857}
+  gameController: {fileID: 1317752949}
 --- !u!212 &823559271
 SpriteRenderer:
   m_ObjectHideFlags: 0

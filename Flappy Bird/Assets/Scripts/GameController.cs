@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
         skyLength = sky1.GetComponent<BoxCollider2D>().size.x;
 
         barriers = new GameObject[barriercount];
+        barriersRigidbody = new Rigidbody2D[barriercount];
 
         for(int i = 0; i < barriercount; i++)
         {
@@ -74,11 +75,12 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
+        physics1.velocity = Vector2.zero;
+        physics2.velocity = Vector2.zero;
+
         for(int i = 0; i < barriers.Length; i++)
         {
-            barriersRigidbody[i].velocity = Vector2.zero;
-            physics1.velocity = Vector2.zero;
-            physics2.velocity = Vector2.zero;
+            barriersRigidbody[i].velocity = Vector2.zero;        
         }
     }
 }
