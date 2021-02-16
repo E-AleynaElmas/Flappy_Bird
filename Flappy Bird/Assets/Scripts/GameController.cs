@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     Rigidbody2D[] barriersRigidbody;
     float speed;
     int counter = 0;
+    bool gameOver = true;
 
     void Start()
     {
@@ -50,27 +51,31 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if(sky1.transform.position.x <= -skyLength)
+        if (gameOver)
         {
-            sky1.transform.position += new Vector3(skyLength * 2, 0);
-        }
-        if (sky2.transform.position.x <= -skyLength)
-        {
-            sky2.transform.position += new Vector3(skyLength * 2, 0);
-        }
-        //--------------------
-        speed += Time.deltaTime;
-        if (speed > 1.2f)
-        {
-            speed = 0;
-            float verticalAxis = Random.Range(-0.5f, 1.10f);
-            barriers[counter].transform.position = new Vector3(3, verticalAxis);
-            counter++;
-            if (counter >= barriers.Length)
+            if (sky1.transform.position.x <= -skyLength)
             {
-                counter = 0;
+                sky1.transform.position += new Vector3(skyLength * 2, 0);
+            }
+            if (sky2.transform.position.x <= -skyLength)
+            {
+                sky2.transform.position += new Vector3(skyLength * 2, 0);
+            }
+            //--------------------
+            speed += Time.deltaTime;
+            if (speed > 1.2f)
+            {
+                speed = 0;
+                float verticalAxis = Random.Range(-0.5f, 1.10f);
+                barriers[counter].transform.position = new Vector3(3, verticalAxis);
+                counter++;
+                if (counter >= barriers.Length)
+                {
+                    counter = 0;
+                }
             }
         }
+        
     }
 
     public void GameOver()
@@ -82,5 +87,6 @@ public class GameController : MonoBehaviour
         {
             barriersRigidbody[i].velocity = Vector2.zero;        
         }
+        gameOver = false;
     }
 }

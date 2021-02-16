@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BirdController : MonoBehaviour
 {
@@ -23,12 +24,20 @@ public class BirdController : MonoBehaviour
     int scoreCounter;
     bool gameOver = true;
     GameController gameControl;
+    AudioSource []sound;
+    CircleCollider2D birdCollider;
+
+    int highScore = 0;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         physics = GetComponent<Rigidbody2D>();
         gameControl = gameController.GetComponent<GameController>();
+        sound = GetComponents<AudioSource>();
+        birdCollider = GetComponent<CircleCollider2D>();
+        highScore = PlayerPrefs.GetInt("scoreMemory");
+        Debug.Log(highScore);
     }
 
     void Update()
@@ -38,6 +47,7 @@ public class BirdController : MonoBehaviour
         {
             physics.velocity = new Vector2(0, 0); //Hızı önce sıfırlıyoruz
             physics.AddForce(new Vector2(0, 200)); //Sonra kuvvet uygulyoruz
+            sound[0].Play();
         }
 
         //yukarı çıkarken yukarı bakış
@@ -92,11 +102,27 @@ public class BirdController : MonoBehaviour
         {
             scoreCounter++;
             scoreText.text = scoreCounter + "";
+            sound[1].Play();
         }
         if(colTag == "TagBarrier")
         {
             gameOver = false;
+            sound[2].Play();
             gameControl.GameOver();
+            birdCollider.enabled = false;
+
+            if (highScore < scoreCounter)
+            {
+                highScore = scoreCounter;
+                PlayerPrefs.SetInt("scoreMemory", highScore);
+            }
+            Invoke("goToMainMenu", 1.5f);
         }
+    }
+
+    void goToMainMenu()
+    {
+        PlayerPrefs.SetInt("currentScore", scoreCounter);
+        SceneManager.LoadScene("MainMenu");       
     }
 }
